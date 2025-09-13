@@ -4,13 +4,7 @@
 // const modalShowContainer = document.getElementById("modalShowContainer");
 // const adoptContainerBtn = document.getElementById("adoptContainerButton");
 // let likeThumbnails = [];
-// const loadCategoryAllPets = () => {
-//   fetch("https://openapi.programming-hero.com/api/peddy/categories")
-//     .then((res) => res.json())
-//     .then((data) => {
-//       showCategoryAllPets(data.categories);
-//     });
-// };
+
 
 // const showCategoryAllPets = (categoryAllPets) => {
 //   // console.log(categoryAllPets);
