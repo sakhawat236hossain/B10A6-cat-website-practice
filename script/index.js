@@ -83,12 +83,12 @@ cartDiv.innerHTML = `
         <span>Birth:</span> ${cart.date_of_birth}
       </h4>
       <h4 class="text-gray-700 mt-2"><span><i class="fa-solid fa-venus"></i> Gender:</span> ${cart.gender}</h4>
-      <h4 class="text-gray-700 mt-2"><span><i class="fa-solid fa-dollar-sign"></i> Price :</span> ${cart.price}$</h4>
+      <h4 class="text-gray-700 mt-2"><span><i class="fa-solid fa-dollar-sign"></i> Price :</span> ${cart.price}</h4>
     </div>
     <div class="flex justify-between items-center text-center mt-3">
       <button class="p-2 rounded shadow-md"><i class="fa-solid fa-thumbs-up"></i></button>
       <button class="text-[#0E7A81] font-bold rounded-sm shadow-md p-2">Adopt</button>
-      <button class="text-[#0E7A81] font-bold rounded-sm shadow-md p-2">Details</button>
+      <button onclick="openModal(${cart.petId})" class="text-[#0E7A81] font-bold rounded-sm shadow-md p-2">Details</button>
     </div>
   </div>
 `;
@@ -97,6 +97,63 @@ cartDiv.innerHTML = `
         cartContainar.appendChild(cartDiv)
 
     });
+}
+
+// {
+//     "petId": 1,
+//     "breed": "Golden Retriever",
+//     "category": "Dog",
+//     "date_of_birth": "2023-01-15",
+//     "price": 1200,
+//     "image": "https://i.ibb.co.com/p0w744T/pet-1.jpg",
+//     "gender": "Male",
+//     "pet_details": "This friendly male Golden Retriever is energetic and loyal, making him a perfect companion for families. Born on January 15, 2023, he enjoys playing outdoors and is especially great with children. Fully vaccinated, he's ready to join your family and bring endless joy. Priced at $1200, he offers love, loyalty, and a lively spirit for those seeking a playful yet gentle dog.",
+//     "vaccinated_status": "Fully",
+//     "pet_name": "Sunny"
+// }
+// modal
+const openModal = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/peddy/pet/pet-${id}`;
+  // console.log("Fetching:", url);
+
+ 
+    const res = await fetch(url);
+    const data = await res.json();
+    displayDetiles(data);
+
+  }
+
+const displayDetiles =(object)=>{
+console.log(object);
+    // const modalContainar = document.getElementById("datelis-containar");
+   const modalContainar = document.getElementById("datelis-containar");
+    modalContainar.innerHTML = `
+      <div class="space-y-5 p-5">
+        <!-- Image -->
+        <img class="w-48 h-48 mx-auto rounded object-cover" src="${object.image}" alt="">
+        
+        <!-- Info -->
+        <div class="flex flex-col md:flex-row justify-between gap-5 text-center md:text-left">
+          <div class="space-y-2">
+            <h1><strong>Breed:</strong> ${object.breed}</h1>
+            <h1><strong>Gender:</strong> ${object.gender}</h1>
+            <h1><strong>Vaccinated:</strong> ${object.vaccinated_status}</h1>
+          </div>
+          <div class="space-y-2">
+            <h1><strong>Birth:</strong> ${object.date_of_birth || 'N/A'}</h1>
+            <h1><strong>Price:</strong> ${object.price ? '$' + object.price : 'Not Available'}</h1>
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div>
+          <h1 class="font-bold text-lg">Details Information</h1>
+          <hr class="my-2">
+          <p class="text-gray-700 text-sm">${object.pet_details || 'No details available.'}</p>
+        </div>
+      </div>
+    `;
+document.getElementById("my_modal_5").showModal();
 }
 
 loadCartAll()
